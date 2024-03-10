@@ -142,14 +142,14 @@
 
                                     @endif
                                 </a></li>
-                                @if (Auth::user()->identitas->akses == "admin")
+                                @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "admin")
 								<li><a href="{{ url('keseluruhan', []) }}" class="@yield('keseluruhanActive')">Keseluruhan</a></li>
                                 @endif
 							</ul>
 						</li>
 
 
-                        @if (Auth::user()->identitas->akses == "admin")
+                        @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "admin")
                         <li>
                             <hr class="bg-light">
 							<a href="{{ url('pengaturan', []) }}" class="dropdown-toggle no-arrow @yield('pengaturanActive')">
