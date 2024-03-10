@@ -139,7 +139,7 @@ class userC extends Controller
 
             identitasM::where("iduser", $iduser)->first()->update([
                 "iduser" => $iduser,
-                "namalengkap" => $tambah->name,
+                "namalengkap" => $request->name,
                 "idjabatan" => $request->idjabatan,
                 "akses" => $request->posisi,
             ]);
