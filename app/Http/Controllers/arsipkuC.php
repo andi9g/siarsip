@@ -224,8 +224,14 @@ class arsipkuC extends Controller
      * @param  \App\Models\arsipM  $arsipM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(arsipM $arsipM)
+    public function destroy(arsipM $arsipM, $idarsip)
     {
-        //
+        try{
+            arsipM::where("idarsip", $idarsip)->where("iduser", Auth::user()->iduser)->delete();
+            return redirect()->back()->with('success', 'Success');
+
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
     }
 }
