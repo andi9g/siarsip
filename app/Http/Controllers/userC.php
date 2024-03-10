@@ -127,6 +127,16 @@ class userC extends Controller
                 "username" => $request->username,
             ]);
 
+            $cek = identitasM::where("iduser", $iduser)->count();
+            if($cek == 0) {
+                identitasM::insert([
+                    "iduser" => $iduser,
+                    "namalengkap" => $request->name,
+                    "idjabatan" => $request->idjabatan,
+                    "akses" => $request->akses,
+                ]);
+            }
+
             identitasM::where("iduser", $iduser)->first()->update([
                 "iduser" => $iduser,
                 "namalengkap" => $tambah->name,
@@ -150,13 +160,15 @@ class userC extends Controller
      */
     public function destroy($iduser)
     {
-        try{
-            User::where("iduser", $iduser)->delete();
-            identitasM::where("iduser", $iduser)->delete();
-            return redirect()->back()->with('success', 'Success');
-        }catch(\Throwable $th){
-            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
-        }
+        // try{
+        //     User::where("iduser", $iduser)->delete();
+        //     identitasM::where("iduser", $iduser)->delete();
+        //     return redirect()->back()->with('success', 'Success');
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        // }
+
+        return redirect()->back()->with('error', 'Maaf fitur hapus dihentikan sementara, karena terhubung ke data pengguna sekolah :D');
 
     }
 }
