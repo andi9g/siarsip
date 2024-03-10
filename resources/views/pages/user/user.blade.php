@@ -33,7 +33,7 @@
 
                         <div class='form-group'>
                             <label for='forjabatan' class='text-capitalize'>Jabatan</label>
-                            <select name='jabatan' required id='forjabatan' class='form-control'>
+                            <select name='idjabatan' required id='forjabatan' class='form-control'>
                                 <option value=''>Pilih</option>
                                 @foreach ($jabatan as $item)
                                     <option value="{{ $item->idjabatan }}">{{ ucwords($item->jabatan) }}</option>
@@ -148,7 +148,7 @@
 
                                     <div class='form-group'>
                                         <label for='forjabatan' class='text-capitalize'>Jabatan</label>
-                                        <select name='jabatan' required id='forjabatan' class='form-control'>
+                                        <select name='idjabatan' required id='forjabatan' class='form-control'>
                                             <option value=''>Pilih</option>
                                             @foreach ($jabatan as $i)
                                                 <option value="{{ $i->idjabatan }}" @if ($i->idjabatan == $item->idjabatan)
