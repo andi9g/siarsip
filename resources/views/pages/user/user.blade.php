@@ -151,7 +151,7 @@
                                         <select name='idjabatan' required id='forjabatan' class='form-control'>
                                             <option value=''>Pilih</option>
                                             @foreach ($jabatan as $i)
-                                                <option value="{{ $i->idjabatan }}" @if ($i->idjabatan == $item->idjabatan)
+                                                <option value="{{ $i->idjabatan }}" @if ($i->idjabatan == $item->identitas->idjabatan)
                                                     selected
                                                 @endif>{{ ucwords($i->jabatan) }}</option>
                                             @endforeach
@@ -160,10 +160,10 @@
                                     <div class='form-group'>
                                         <label for='forposisi' class='text-capitalize'>Posisi</label>
                                         <select name='posisi' required id='forposisi' class='form-control'>
-                                            <option value='user' @if ($item->akses == "user")
+                                            <option value='user' @if ($item->identitas->akses == "user")
                                                 selected
                                             @endif>User</option>
-                                            <option value='admin'  @if ($item->akses == "admin")
+                                            <option value='admin'  @if ($item->identitas->akses == "admin")
                                                 selected
                                             @endif>Admin</option>
                                         <select>
