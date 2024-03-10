@@ -88,7 +88,7 @@ class userC extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show()
     {
         //
     }
@@ -99,7 +99,7 @@ class userC extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit()
     {
         //
     }
@@ -111,7 +111,7 @@ class userC extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user, $iduser)
+    public function update(Request $request,  $iduser)
     {
         $request->validate([
             'name'=>'required',
