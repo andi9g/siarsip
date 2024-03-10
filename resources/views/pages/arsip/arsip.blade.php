@@ -121,7 +121,7 @@
                         <form action='{{ route('arsipku.destroy', [$item->idarsip]) }}' method='post' class='d-inline'>
                              @csrf
                              @method('DELETE')
-                             <button type='submit' onclick="return confirm('Yakin ingin dihapus?')" class='badge badge-danger badge-btn border-0'>
+                             <button type='submit' onclick="return confirm('Yakin ingin dihapus?')" class='mx-1 badge badge-danger badge-btn border-0'>
                                  <i class="fa fa-trash"></i>
                              </button>
                         </form>
