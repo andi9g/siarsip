@@ -120,7 +120,7 @@ class userC extends Controller
             'posisi'=>'required',
         ]);
 
-        // try{
+        try{
 
             User::where("iduser", $iduser)->first()->update([
                 "name" => $request->name,
@@ -133,7 +133,7 @@ class userC extends Controller
                     "iduser" => $iduser,
                     "namalengkap" => $request->name,
                     "idjabatan" => $request->idjabatan,
-                    "akses" => $request->akses,
+                    "akses" => $request->posisi,
                 ]);
             }
 
@@ -147,9 +147,9 @@ class userC extends Controller
 
             return redirect()->back()->with('success', 'Success');
 
-        // }catch(\Throwable $th){
-        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
-        // }
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
     }
 
     /**
