@@ -16,6 +16,11 @@
         padding: 5px 5px !important;
         margin: 0px !important;
       }
+
+      #loading {
+        z-index: 9999 !important;
+      }
+
     </style>
 		<!-- Site favicon -->
 {{-- <link
@@ -43,6 +48,15 @@
 
 	</head>
 	<body class="bg-sm body-sm">
+        <div class="cssload-dots" id="loading" style="display: none">
+            <div class="cssload-dot"></div>
+            <div class="cssload-dot"></div>
+            <div class="cssload-dot"></div>
+            <div class="cssload-dot"></div>
+            <div class="cssload-dot"></div>
+        </div>
+
+
 
 		<div class="header" style="height: 60px;">
 			<div class="header-left">

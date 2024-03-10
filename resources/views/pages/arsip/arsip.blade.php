@@ -16,7 +16,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('arsipku.store', []) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('arsipku.store', []) }}" method="post" id="myFormBerkas" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -50,10 +50,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Tambah Arsip</button>
+                    <button type="submit" class="btn btn-success" id="myButton">Tambah Arsip</button>
                 </div>
 
             </form>
+
 
         </div>
     </div>
