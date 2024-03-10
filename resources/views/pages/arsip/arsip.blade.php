@@ -115,9 +115,16 @@
                                 <i class="fa fa-download"></i> Download
                             </button>
                         </form>
-                        <a href="{{ route('arsipku.show', [$item->idarsip]) }}" class="badge badge-secondary badge-btn border-0">
+                        <a href="{{ route('arsipku.show', [$item->idarsip]) }}" class="badge badge-secondary badge-btn border-0 d-inline">
                             <i class="fa fa-eye"></i> Lihat
                         </a>
+                        <form action='{{ route('arsipku.destroy', [$item->idarsip]) }}' method='post' class='d-inline'>
+                             @csrf
+                             @method('DELETE')
+                             <button type='submit' onclick="return confirm('Yakin ingin dihapus?')" class='badge badge-danger badge-btn border-0'>
+                                 <i class="fa fa-trash"></i>
+                             </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
