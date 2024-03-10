@@ -180,7 +180,7 @@ class arsipkuC extends Controller
 
     public function download(arsipM $arsipM, $idarsip)
     {
-        try{
+        // try{
             $iduser = Auth::user()->iduser;
             $cek = arsipM::where("iduser", $iduser)->where("idarsip", $idarsip);
 
@@ -190,9 +190,9 @@ class arsipkuC extends Controller
             }
 
             return redirect()->back()->with('error', 'Terjadi kesalahan');
-        }catch(\Throwable $th){
-            return redirect()->back()->with('error', 'Terjadi kesalahan');
-        }
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('error', 'Terjadi kesalahan');
+        // }
     }
 
     /**
