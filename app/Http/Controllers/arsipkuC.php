@@ -112,22 +112,24 @@ class arsipkuC extends Controller
     }
     public function prosesbagikan(Request $request, arsipM $arsipM, $idarsip)
     {
-        // try{
+        try{
             $iduser = Auth::user()->iduser;
             $bagikan = bagikanM::where("idarsip", $idarsip)->delete();
 
-            foreach ($request->iduser as $item) {
-                $tambah = new bagikanM;
-                $tambah->iduser = $item;
-                $tambah->idarsip = $idarsip;
-                $tambah->save();
+            if(count($request->iduser) > 0) {
+                foreach ($request->iduser as $item) {
+                    $tambah = new bagikanM;
+                    $tambah->iduser = $item;
+                    $tambah->idarsip = $idarsip;
+                    $tambah->save();
+                }
             }
 
             return redirect()->back()->with('success', 'Success');
 
-        // }catch(\Throwable $th){
-        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
-        // }
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
 
     }
     public function prosesbagikankeseluruhan(Request $request,arsipM $arsipM, $idarsip)
