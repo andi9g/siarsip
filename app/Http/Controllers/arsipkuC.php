@@ -128,7 +128,7 @@ class arsipkuC extends Controller
             return redirect()->back()->with('success', 'Success');
 
         }catch(\Throwable $th){
-            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+            return redirect()->back()->with('warning', 'Telah diproses');
         }
 
     }
