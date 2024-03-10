@@ -129,7 +129,7 @@ class userC extends Controller
 
             $cek = identitasM::where("iduser", $iduser)->count();
             if($cek == 0) {
-                identitasM::insert([
+                identitasM::create([
                     "iduser" => $iduser,
                     "namalengkap" => $request->name,
                     "idjabatan" => $request->idjabatan,
