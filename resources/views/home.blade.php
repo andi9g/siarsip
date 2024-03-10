@@ -5,7 +5,7 @@
 @section('judul', "welcome")
 
 @section('kembali')
-@if (Auth::user()->identitas->akses == "admin")
+@if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "admin")
 <div class="row pb-10 mt-3">
     <div class="col-xl-3 col-lg-6 col-md-6 mt-3 ">
         <div class="card-box height-100-p widget-style3">
