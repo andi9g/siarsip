@@ -50,7 +50,7 @@
                     <td><b>{{ $item->namaarsip }}</b></td>
                     <td>{{ $item->keterangan->keterangan }}</td>
                     <td>
-                        {{ $item->user->name }}
+                        {{ $item->user->identitas->namalengkap }}
                     </td>
                     <td>
                         <form action="{{ route('downloadKeseluruhan', [$item->idarsip]) }}" method="post" class="d-inline">

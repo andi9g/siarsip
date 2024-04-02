@@ -15,34 +15,106 @@ class Arsip extends Migration
      */
     public function up()
     {
-        Schema::create('identitas', function (Blueprint $table) {
-            $table->bigIncrements('ididentitas');
-            $table->integer("iduser");
+        Schema::create('guru', function (Blueprint $table) {
+            $table->bigIncrements('idguru');
+            $table->integer("iduser")->unique();
             $table->integer("idjabatan")->default(0)->nullable();
             $table->String("namalengkap")->nullable();
             $table->String("email")->nullable();
             $table->enum("jk", ["P", "L"])->default("L");
             $table->enum("agama", ["Islam", "Kristen Protestan", "Katolik", "Hindu", "Buddha", "Konghucu"]);
-            $table->enum("akses", ["user", "admin"]);
+            $table->enum("akses", ["guru", "kepsek", "superadmin"]);
             $table->String("gambar")->default("user.png");
             $table->timestamps();
         });
 
-        DB::connection('mysql2')->table('user')->insert([
+        Schema::create('siswa', function (Blueprint $table) {
+            $table->bigIncrements('idsiswa');
+            $table->integer("iduser");
+            $table->integer("idkelas");
+            $table->integer("idjurusan");
+            // $table->char("nisn", 11)->unique();
+            $table->char("nis")->nullable();
+            $table->String("namalengkap")->nullable();
+            $table->String("tempatlahir")->nullable();
+            $table->date("tanggallahir")->nullable();
+            $table->String("email")->nullable();
+            $table->enum("jk", ["P", "L"])->default("L");
+            $table->enum("agama", ["Islam", "Kristen Protestan", "Katolik", "Hindu", "Buddha", "Konghucu"]);
+            $table->String("gambar")->default("user.png");
+            $table->timestamps();
+        });
+
+        Schema::create('jurusan', function (Blueprint $table) {
+            $table->bigIncrements('idjurusan');
+            $table->String("jurusan")->unique();
+            $table->String("namajurusan");
+            $table->timestamps();
+        });
+
+        DB::table('jurusan')->insert([
+            "jurusan" => "RPL",
+            "namajurusan" => "Rekayasa Perangkat Lunak",
+        ]);
+
+        Schema::create('kelas', function (Blueprint $table) {
+            $table->bigIncrements('idkelas');
+            $table->String("namakelas")->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('modulajar', function (Blueprint $table) {
+            $table->bigIncrements('idmodulajar');
+            $table->String("namamodulajar");
+            $table->String("mimetype");
+            $table->integer("iduser");
+            $table->integer("idmapel");
+            $table->date("tanggal");
+            $table->String("links");
+            $table->timestamps();
+        });
+
+        Schema::create('bagikanmodulajar', function (Blueprint $table) {
+            $table->bigIncrements('idbagikanmodulajar');
+            $table->integer("idmodulajar");
+            $table->integer("idjurusan");
+            $table->integer("iduser");
+            $table->integer("idkelas");
+            $table->timestamps();
+        });
+
+        Schema::create('mapel', function (Blueprint $table) {
+            $table->bigIncrements('idmapel');
+            $table->integer("iduser");
+            $table->String("namamapel");
+            $table->timestamps();
+        });
+
+        $kelas = [
+            "X",
+            "XI",
+            "XII",
+        ];
+        foreach ($kelas as $k) {
+            DB::table('kelas')->insert([
+                "namakelas" => $k,
+            ]);
+        }
+
+        DB::table('user')->insert([
             "iduser" => "404",
-            "name" => "superadmin",
             "username" => "superadmin",
             "password" => Hash::make("admin2023!@#"),
         ]);
 
-        DB::table('identitas')->insert([
+        DB::table('guru')->insert([
             "iduser" => "404",
             "idjabatan" => 0,
             "namalengkap" => "superadmin",
             "email" => "superadmin@gmail.com",
             "jk" => "L",
             "agama" => "1",
-            "akses" => "admin",
+            "akses" => "superadmin",
         ]);
 
 

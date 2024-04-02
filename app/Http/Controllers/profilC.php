@@ -42,7 +42,11 @@ class profilC extends Controller
                     if($size < 1000000) {
                         $file->move(public_path("gambar"), $filename);
 
-                        $user = Auth::user()->identitas;
+                        if(!empty(Auth::user()->identitas)){
+                            $user = Auth::user()->identitas;
+                        }else {
+                            $user = Auth::user()->siswa;
+                        }
                         $user->update([
                             "gambar" => $filename,
                         ]);
@@ -100,7 +104,7 @@ class profilC extends Controller
     public function ubahnama(Request $request)
     {
         $request->validate([
-            'name'=>'required',
+            'namalengkap'=>'required',
             'email'=>'required',
             'jk'=>'required',
             'agama'=>'required',
@@ -108,17 +112,14 @@ class profilC extends Controller
         try{
 
             $nama = $request->name;
-            $user = Auth::user();
-            $updateUser = $user->update([
-                "name" => $nama,
-            ]);
+            if(!empty(Auth::user()->identitas)) {
+                $user = Auth::user()->identitas;
+            }else {
+                $user = Auth::user()->siswa;
+            }
 
-            $updateIdentitas = $user->identitas->update([
-                "namalengkap" => $nama,
-                "email" => $request->email,
-                "jk" => $request->jk,
-                "agama" => $request->agama,
-            ]);
+            $data = $request->all();
+            $updateIdentitas = $user->update($data);
 
             return redirect()->back()->with('success', 'Success');
         }catch(\Throwable $th){

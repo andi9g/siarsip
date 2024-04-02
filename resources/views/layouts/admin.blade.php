@@ -1,6 +1,13 @@
 @php
     $iduser = Auth::user()->iduser;
     $dibagikan = App\Models\bagikanM::where("iduser", $iduser)->where("ket", 0)->count();
+    if(!empty(Auth::user()->identitas)) {
+        $nama = Auth::user()->identitas->namalengkap;
+        $gambar = Auth::user()->identitas->gambar;
+    }else {
+        $nama = Auth::user()->siswa->namalengkap;
+        $gambar = Auth::user()->siswa->gambar;
+    }
 @endphp
 
 <!DOCTYPE html>
@@ -15,6 +22,9 @@
       th td {
         padding: 5px 5px !important;
         margin: 0px !important;
+      }
+      .myhover:hover {
+        background: rgba(136, 175, 252, 0.359) !important;
       }
 
       #loading {
@@ -76,9 +86,9 @@
 							data-toggle="dropdown"
 						>
             <span class="user-icon" style="width:40px;box-shadow:none;height:40px">
-              <img src="{{ url('gambar', [ empty(Auth::user()->identitas->gambar)?'user.png':Auth::user()->identitas->gambar]) }}" style="max-height: 40px;width:40px" alt="">
+              <img src="{{ url('gambar', [ $gambar ]) }}" style="max-height: 40px;width:40px" alt="">
             </span>
-							<span class="user-name">{{ empty(Auth::user()->name)?'noname':Auth::user()->name }}</span>
+							<span class="user-name">{{ $nama }}</span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -129,6 +139,17 @@
 							</a>
 						</li>
 
+                        @if (!empty(Auth::user()->siswa))
+                        <li>
+							<a href="{{ url('materi', []) }}" class="dropdown-toggle no-arrow @yield('materiActive')">
+								<span class="micon fa fa-book"></span
+								><span class="mtext">Materi</span>
+							</a>
+						</li>
+                        @endif
+
+                        @if (!empty(Auth::user()->identitas))
+
                         <li class="dropdown">
 							<a href="javascript:;" class="dropdown-toggle @yield('arsipActive')">
 								<span class="micon fa fa-file-archive-o"></span
@@ -142,14 +163,35 @@
 
                                     @endif
                                 </a></li>
-                                @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "admin")
+                                @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "superadmin")
 								<li><a href="{{ url('keseluruhan', []) }}" class="@yield('keseluruhanActive')">Keseluruhan</a></li>
                                 @endif
 							</ul>
 						</li>
+                        @if (!empty(Auth::user()->identitas))
+                        @if (Auth::user()->identitas->akses == "guru")
+                        <li>
+							<a href="{{ url('modulajar', []) }}" class="dropdown-toggle no-arrow @yield('modulajarActive')">
+								<span class="micon fa fa-graduation-cap"></span
+								><span class="mtext">Modul Ajar/RPP</span>
+							</a>
+						</li>
+
+                        @endif
+                        @endif
+                        @if (!empty(Auth::user()->identitas))
+                        @if (Auth::user()->identitas->akses == "superadmin" || Auth::user()->identitas->akses == "kepsek")
+                            <li>
+                                <a href="{{ url('monitoring', []) }}" class="dropdown-toggle no-arrow @yield('monitoringActive')">
+                                    <span class="micon fa fa-bar-chart"></span
+                                    ><span class="mtext">Monitoring Modul/RPP</span>
+                                </a>
+                            </li>
+                        @endif
+                        @endif
 
 
-                        @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "admin")
+                        @if ((empty(Auth::user()->identitas->akses)?'':Auth::user()->identitas->akses) == "superadmin")
                         <li>
                             <hr class="bg-light">
 							<a href="{{ url('pengaturan', []) }}" class="dropdown-toggle no-arrow @yield('pengaturanActive')">
@@ -160,10 +202,24 @@
 
                         <li>
 							<a href="{{ url('user', []) }}" class="dropdown-toggle no-arrow @yield('userActive')">
-								<span class="micon fa fa-users"></span
-								><span class="mtext">Kelola Pengguna</span>
+								<span class="micon fa fa-user"></span
+								><span class="mtext">Data Pengolah</span>
 							</a>
 						</li>
+                        <li>
+							<a href="{{ url('siswa', []) }}" class="dropdown-toggle no-arrow @yield('siswaActive')">
+								<span class="micon fa fa-users"></span
+								><span class="mtext">Data Siswa</span>
+							</a>
+						</li>
+                        <li>
+							<a href="{{ url('mapel', []) }}" class="dropdown-toggle no-arrow @yield('mapelActive')">
+								<span class="micon fa fa-book"></span
+								><span class="mtext">Mata Pelajaran</span>
+							</a>
+						</li>
+                        @endif
+
 
                         @endif
 					</ul>
@@ -207,12 +263,16 @@
         @yield('kembali')
       </div>
 
-      <div class="pd-20 card-box mb-30">
+      <div class="pd-20 card-box mb-10">
             @yield('cari')
 
 			@yield('content')
 
       </div>
+        <div class="">
+            @yield('content2')
+
+        </div>
 
 		</div>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\keteranganM;
 use App\Models\jabatanM;
+use App\Models\jurusanM;
 use App\Models\bagikanM;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,11 @@ class pengaturanC extends Controller
     {
         $jabatan = jabatanM::get();
         $keterangan = keteranganM::get();
+        $jurusan = jurusanM::get();
         return view("pages.pengaturan.pengaturan", [
             "jabatan" => $jabatan,
             "keterangan" => $keterangan,
+            "jurusan" => $jurusan,
         ]);
     }
 
@@ -101,6 +104,45 @@ class pengaturanC extends Controller
 
         try{
             keteranganM::destroy($idketerangan);
+            return redirect()->back()->with('success', 'Success');
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+    }
+
+    public function tambahJurusan(Request $request)
+    {
+        $request->validate([
+            'jurusan'=>'required'
+        ]);
+        try{
+            $data = $request->all();
+            jurusanM::create($data);
+            return redirect()->back()->with('success', 'Success');
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+    }
+
+    public function ubahJurusan(Request $request, $idjurusan)
+    {
+        $request->validate([
+            'jurusan'=>'required'
+        ]);
+        try{
+            $data = $request->all();
+            jurusanM::where("idjurusan", $idjurusan)->first()->update($data);
+            return redirect()->back()->with('success', 'Success');
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+    }
+
+    public function hapusJurusan(Request $request, $idjurusan)
+    {
+
+        try{
+            jurusanM::destroy($idjurusan);
             return redirect()->back()->with('success', 'Success');
         }catch(\Throwable $th){
             return redirect()->back()->with('toast_error', 'Terjadi kesalahan');

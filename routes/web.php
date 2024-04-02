@@ -20,8 +20,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', 'HomeController@index');
-
     //logout
     Route::post("logout", "Auth\LoginController@logout")->name("logout");
     //profil
@@ -31,18 +29,35 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profil/ubahgambar', "profilC@ubahgambar")->name("ubah.gambar");
 
 
+    Route::middleware(['GerbangSiswa'])->group(function () {
+        //materi siswa / mapel
+        Route::get('materi', "materiC@index");
+        Route::get('materi/show/{idmodulajar}', "materiC@show")->name("materi.show");
+        Route::get('materi/lihat/{idmapel}', "materiC@materi")->name("lihat.mapel");
+    });
 
 
+    //home
+    Route::get('/home', 'HomeController@index');
 
-    //arsip
-    Route::resource('arsipku', "arsipkuC");
-    Route::post('download/{idarsip}/arsipku', "arsipkuC@download")->name('downloadArsipku');
-    Route::get('bagikan/{idarsip}/arsipku', "arsipkuC@bagikan")->name('bagikan');
-    Route::post('bagikan/{idarsip}/arsipku', "arsipkuC@prosesbagikan")->name('proses.bagikan');
-    Route::post('bagikan/{idarsip}/arsipku/keseluruhan', "arsipkuC@prosesbagikankeseluruhan")->name('proses.bagikan.keseluruhan');
 
-    Route::resource('dibagikan', "dibagikanC");
-    Route::post('download/{idarsip}/dibagikan', "dibagikanC@download")->name('downloadDibagikan');
+    Route::middleware(['GerbangGuru'])->group(function () {
+        //arsip
+        Route::resource('arsipku', "arsipkuC");
+        Route::post('download/{idarsip}/arsipku', "arsipkuC@download")->name('downloadArsipku');
+        Route::get('bagikan/{idarsip}/arsipku', "arsipkuC@bagikan")->name('bagikan');
+        Route::post('bagikan/{idarsip}/arsipku', "arsipkuC@prosesbagikan")->name('proses.bagikan');
+        Route::post('bagikan/{idarsip}/arsipku/keseluruhan', "arsipkuC@prosesbagikankeseluruhan")->name('proses.bagikan.keseluruhan');
+
+        Route::resource('dibagikan', "dibagikanC");
+        Route::post('download/{idarsip}/dibagikan', "dibagikanC@download")->name('downloadDibagikan');
+
+        //modulajar
+        Route::resource('modulajar', "modulajarC");
+        Route::get('bagikan/{idmodulajar}/modulajar', "modulajarC@bagikan")->name("bagikan.modulajar");
+        Route::post('bagikan/{idmodulajar}/modulajar', "modulajarC@prosesbagikan")->name("bagikan.modulajar.proses");
+
+    });
 
 
     Route::middleware(['gerbangAdmin'])->group(function () {
@@ -51,8 +66,16 @@ Route::middleware(['auth'])->group(function () {
         //user
         Route::resource('user', "userC");
 
+        //siswa
+        Route::resource('siswa', "siswaC");
+        Route::post("reset/{idsiswa}/siswa", "siswaC@resetpassword")->name("reset.siswa");
 
 
+
+        //mapel
+        Route::resource('mapel', "mapelC");
+
+        //pengaturan
         //jabatan
         Route::get("pengaturan", "pengaturanC@index")->name("pengaturan");
         //jabatan
@@ -63,11 +86,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post("keterangan", "pengaturanC@tambahKeterangan")->name("tambahKeterangan");
         Route::delete("keterangan/{idketerangan}/hapus", "pengaturanC@hapusKeterangan")->name("hapusKeterangan");
         Route::put("keterangan/{idketerangan}/ubah", "pengaturanC@ubahKeterangan")->name("ubahKeterangan");
+        //jurusan
+        Route::post("jurusan", "pengaturanC@tambahJurusan")->name("tambahJurusan");
+        Route::delete("jurusan/{idjurusan}/hapus", "pengaturanC@hapusJurusan")->name("hapusJurusan");
+        Route::put("jurusan/{idjurusan}/ubah", "pengaturanC@ubahJurusan")->name("ubahJurusan");
     });
 
 
-
-
+    Route::middleware(['GerbangKepsek'])->group(function () {
+        //monitoring Kepsek
+        Route::get('monitoring', 'monitoringC@index');
+        Route::get('monitoring/berkas/{iduser}', 'monitoringC@berkas')->name("lihatberkas");
+        Route::get('monitoring/show/{iduser}', 'monitoringC@show')->name("show.berkas");
+    });
 
 
 });
@@ -76,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Route::get('pdf', 'startController@pdf');
 
-Route::get('siswa/export/', 'startController@export');
+// Route::get('siswa/export/', 'startController@export');
 
 
 

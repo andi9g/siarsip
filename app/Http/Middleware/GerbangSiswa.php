@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
-class gerbangAdmin
+
+class GerbangSiswa
 {
     /**
      * Handle an incoming request.
@@ -17,12 +18,12 @@ class gerbangAdmin
     public function handle(Request $request, Closure $next)
     {
         $cek = Auth::user();
-        if(!empty($cek->identitas)) {
-            if ($cek->identitas->akses == "superadmin") {
-                # code...
-                return $next($request);
+        if(!empty($cek->siswa)) {
+            if(empty($cek->siswa->email) || empty($cek->siswa->tempatlahir) || empty($cek->siswa->tanggallahir)){
+                return redirect("profil")->with('warning', 'Silahkan Lengkapi Identitas Terlebih Dahulu');
             }
+            return $next($request);
         }
-        return redirect()->back()->with('error', 'Terjadi kesalahan');
+        return redirect("home")->with('error', 'Terjadi kesalahan');
     }
 }

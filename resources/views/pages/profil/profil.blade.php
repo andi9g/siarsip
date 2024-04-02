@@ -3,16 +3,24 @@
 @section("judul", "Profil")
 
 @section('content')
-
+@php
+    if(!empty(Auth::user()->identitas)) {
+        $nama = Auth::user()->identitas->namalengkap;
+        $gambar = Auth::user()->identitas->gambar;
+    }else {
+        $nama = Auth::user()->siswa->namalengkap;
+        $gambar = Auth::user()->siswa->gambar;
+    }
+@endphp
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
                     <div class="card-title text-lg text-bold">Gambar</div>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ url('gambar', [Auth::user()->identitas->gambar]) }}" width="80%" class="rounded-circle" alt="">
+                    <img src="{{ url('gambar', [$gambar]) }}" width="80%" class="rounded-circle" alt="">
                 </div>
                 <div class="card-footer">
                     <form action="{{ route('ubah.gambar', []) }}" method="post" enctype="multipart/form-data">
@@ -49,7 +57,7 @@
                                 href="#custom-tabs-four-password"
                                 role="tab"
                                 aria-controls="custom-tabs-four-password"
-                                aria-selected="false">Password</a>
+                                aria-selected="false">Ganti Password</a>
                         </li>
 
                     </ul>
@@ -62,11 +70,12 @@
                             role="tabpanel"
                             aria-labelledby="custom-tabs-four-nama-tab">
 
+                            @if (!empty(Auth::user()->identitas))
                             <form action="{{ route('ubah.nama', []) }}" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Nama Lengkap</label>
-                                    <input id="name" class="form-control" type="text" value="{{ Auth::user()->name }}" name="name">
+                                    <input id="name" class="form-control" type="text" value="{{ Auth::user()->identitas->namalengkap }}" name="namalengkap">
                                 </div>
 
                                 <div class="form-group">
@@ -124,6 +133,91 @@
                                     <button type="submit" class="btn btn-success text-right">UPDATE</button>
                                 </div>
                             </form>
+
+
+                            @else
+                            <form action="{{ route('ubah.nama', []) }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="nis">NIS</label>
+                                    <input id="nis" class="form-control" type="text" value="{{ Auth::user()->siswa->nis }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nis">Rombel</label>
+                                    <input id="nis" class="form-control" type="text" value="{{ Auth::user()->siswa->kelas->namakelas." - ".Auth::user()->siswa->jurusan->jurusan }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Nama Lengkap</label>
+                                    <input id="name" class="form-control" type="text" value="{{ Auth::user()->siswa->namalengkap }}" name="namalengkap">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tempatlahir">Tempat Lahir</label>
+                                    <input id="tempatlahir" class="form-control @if (empty( Auth::user()->siswa->tempatlahir))
+                                        is-invalid
+                                    @endif" type="text" value="{{ Auth::user()->siswa->tempatlahir }}" name="tempatlahir">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tanggallahir">Tempat Lahir</label>
+                                    <input id="tanggallahir" class="form-control @if (empty(Auth::user()->siswa->tanggallahir))
+                                        is-invalid
+                                    @endif" type="date" value="{{ Auth::user()->siswa->tanggallahir }}" name="tanggallahir">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" class="form-control @if (empty(Auth::user()->siswa->email))
+                                        is-invalid
+                                    @endif" type="text" name="email" value="{{ Auth::user()->siswa->email }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="kelamin">Kelamin</label><br>
+                                    <input type="radio" name="jk" value="L" @if (Auth::user()->siswa->jk == "L")
+                                        checked
+                                    @endif>
+                                    <label for="">Laki - Laki</label>
+                                    &emsp;
+                                    <input type="radio" name="jk" value="P" @if (Auth::user()->siswa->jk == "P")
+                                    checked
+                                @endif>
+                                    <label for="">Perempuan</label>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="my-input">Agama</label>
+                                    <select name="agama" id="agama" class="form-control">
+                                        <option value="Islam" @if (Auth::user()->siswa->agama == "Islam")
+                                            selected
+                                        @endif>Islam</option>
+                                        <option value="Kristen Protestan" @if (Auth::user()->siswa->agama == "Kristen Protestan")
+                                            selected
+                                        @endif>Kristen Protestan</option>
+                                        <option value="Katolik" @if (Auth::user()->siswa->agama == "Katolik")
+                                            selected
+                                        @endif>Katolik</option>
+                                        <option value="Hindu" @if (Auth::user()->siswa->agama == "Hindu")
+                                            selected
+                                        @endif>Hindu</option>
+                                        <option value="Buddha" @if (Auth::user()->siswa->agama == "Buddha")
+                                            selected
+                                        @endif>Buddha</option>
+                                        <option value="Konghucu" @if (Auth::user()->siswa->agama == "Konghucu")
+                                            selected
+                                        @endif>Konghucu</option>
+                                    </select>
+                                </div>
+
+
+
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-success text-right">UPDATE</button>
+                                </div>
+                            </form>
+
+                            @endif
 
 
                         </div>

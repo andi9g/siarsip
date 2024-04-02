@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
-class gerbangAdmin
+
+class GerbangKepsek
 {
     /**
      * Handle an incoming request.
@@ -18,7 +19,7 @@ class gerbangAdmin
     {
         $cek = Auth::user();
         if(!empty($cek->identitas)) {
-            if ($cek->identitas->akses == "superadmin") {
+            if ($cek->identitas->akses == "kepsek" || $cek->identitas->akses == "superadmin") {
                 # code...
                 return $next($request);
             }

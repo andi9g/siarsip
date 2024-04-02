@@ -14,15 +14,23 @@ class User extends Authenticatable
 
     protected $table = "user";
     protected $primaryKey = "iduser";
-    protected $connection = "mysql2";
+    // protected $connection = "mysql2";
 
     public function identitas()
     {
         return $this->hasOne(identitasM::class, 'iduser','iduser');
     }
+    public function siswa()
+    {
+        return $this->hasOne(siswaM::class, 'iduser','iduser');
+    }
     public function bagikan()
     {
         return $this->hasOne(bagikanM::class, 'idbagikan','idbagikan');
+    }
+    public function mapel()
+    {
+        return $this->hasOne(mapelM::class, 'iduser','iduser');
     }
 
     /**
@@ -31,8 +39,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        // 'name',
+        // 'email',
         'username',
         'password',
     ];

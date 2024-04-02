@@ -21,9 +21,14 @@ class userC extends Controller
         $jabatan = jabatanM::get();
 
 
-        $user = User::where("name", "like", "%$keyword%")
-        ->orderBy("name", "asc")
+        $user = User::with("identitas")
+        ->has("identitas")
+        ->whereHas('identitas', function ($query) use ($keyword) {
+            $query->where('namalengkap', 'like', "%$keyword%");
+        })
         ->paginate(10);
+
+        // dd($user);
 
         $user->appends($request->only(["limit", "keyword"]));
 
@@ -55,31 +60,31 @@ class userC extends Controller
         $request->validate([
             'name'=>'required',
             'username'=>'required',
-            'jabatan'=>'required',
+            'idjabatan'=>'required',
             'posisi'=>'required',
         ]);
 
-        try{
+        // try{
             $password = Hash::make("admin".date("Y"));
 
             $tambah = new User;
-            $tambah->name = $request->name;
+            // $tambah->name = $request->name;
             $tambah->username = $request->username;
             $tambah->password = $password;
             $tambah->save();
 
             $identitas = new identitasM;
             $identitas->iduser = $tambah->iduser;
-            $identitas->namalengkap = $tambah->name;
+            $identitas->namalengkap = $request->name;
             $identitas->idjabatan = $request->idjabatan;
             $identitas->akses = $request->posisi;
             $identitas->save();
 
             return redirect()->back()->with('success', 'Success');
 
-        }catch(\Throwable $th){
-            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
-        }
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        // }
     }
 
     /**
@@ -116,14 +121,14 @@ class userC extends Controller
         $request->validate([
             'name'=>'required',
             'username'=>'required',
-            'jabatan'=>'required',
+            'idjabatan'=>'required',
             'posisi'=>'required',
         ]);
 
         // try{
 
             User::where("iduser", $iduser)->first()->update([
-                "name" => $request->name,
+                // "name" => $request->name,
                 "username" => $request->username,
             ]);
 

@@ -41,10 +41,11 @@
                             <select>
                         </div>
                         <div class='form-group'>
-                            <label for='forposisi' class='text-capitalize'>Posisi</label>
+                            <label for='forposisi' class='text-capitalize'>Hak Akses</label>
                             <select name='posisi' required id='forposisi' class='form-control'>
-                                <option value='user'>User</option>
-                                <option value='admin'>Admin</option>
+                                <option value='guru'>Guru/User</option>
+                                <option value='kepsek'>Kepala Sekolah</option>
+                                <option value='superadmin'>Superadmin</option>
                             <select>
                         </div>
                     </div>
@@ -96,7 +97,7 @@
             @foreach ($user as $item)
                 <tr>
                     <td>{{ $loop->iteration + $user->firstItem() - 1 }}</td>
-                    <td>{{ ucwords($item->name) }}</td>
+                    <td>{{ ucwords($item->identitas->namalengkap) }}</td>
                     <td>
                         @if (Hash::check("admin".date("Y"), $item->password))
                             Default
@@ -135,7 +136,7 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="name">Nama Lengkap</label>
-                                        <input id="name" class="form-control" placeholder="namalengkap" value="{{ $item->name }}" type="text" name="name">
+                                        <input id="name" class="form-control" placeholder="namalengkap" value="{{ $item->identitas->namalengkap }}" type="text" name="name">
                                     </div>
 
                                     <div class="form-group">
@@ -158,19 +159,22 @@
                                         <select>
                                     </div>
                                     <div class='form-group'>
-                                        <label for='forposisi' class='text-capitalize'>Posisi</label>
+                                        <label for='forposisi' class='text-capitalize'>Hak Akses</label>
                                         <select name='posisi' required id='forposisi' class='form-control'>
-                                            <option value='user' @if ($item->identitas->akses == "user")
+                                            <option value='user' @if ($item->identitas->akses == "guru")
                                                 selected
                                             @endif>User</option>
-                                            <option value='admin'  @if ($item->identitas->akses == "admin")
+                                            <option value='admin'  @if ($item->identitas->akses == "kepalasekolah")
                                                 selected
-                                            @endif>Admin</option>
+                                            @endif>Kepsek</option>
+                                            <option value='superadmin'  @if ($item->identitas->akses == "superadmin")
+                                                selected
+                                            @endif>Superadmin</option>
                                         <select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">Tambah</button>
+                                    <button type="submit" class="btn btn-success">UBAH</button>
                                 </div>
 
                             </form>
