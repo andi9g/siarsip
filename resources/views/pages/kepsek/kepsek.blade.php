@@ -32,9 +32,9 @@
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>Nama Guru</th>
-                <th>Aksi</th>
+                <th width="5px" class="text-center">No</th>
+                <th class="text-center">Nama Guru</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
