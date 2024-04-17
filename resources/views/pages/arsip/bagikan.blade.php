@@ -24,7 +24,7 @@
             <option value="{{ $item->iduser }}" @if ($cek > 0)
                 selected
             @endif>
-                {{ $item->name }}
+                {{ $item->identitas->namalengkap }}
         </option>
         @endforeach
     </select>

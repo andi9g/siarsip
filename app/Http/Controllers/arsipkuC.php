@@ -94,7 +94,8 @@ class arsipkuC extends Controller
         $cek = arsipM::where("iduser", $iduser)->where("idarsip", $idarsip);
 
         if($cek->count() > 0) {
-            $user = User::where("iduser", "!=", $iduser)->get();
+            $user = User::has("identitas")
+            ->where("iduser", "!=", $iduser)->get();
 
             return view("pages.arsip.bagikan", [
                 "user" => $user,
