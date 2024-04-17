@@ -19,7 +19,7 @@ class GerbangGuru
     {
         $cek = Auth::user();
         if(!empty($cek->identitas)) {
-            if ($cek->identitas->akses == "guru" || $cek->identitas->akses == "superadmin") {
+            if ($cek->identitas->akses == "guru" || $cek->identitas->akses == "kepsek" || $cek->identitas->akses == "superadmin") {
                 # code...
                 return $next($request);
             }
