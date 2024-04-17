@@ -31,7 +31,7 @@
 <div class="table-responsive">
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
-            <tr>
+            <tr class="py-0 my-0">
                 <th width="5px" class="text-center">No</th>
                 <th class="text-center">Nama Guru</th>
                 <th class="text-center">Aksi</th>
