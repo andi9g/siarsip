@@ -44,7 +44,7 @@
                     <td>{{ $loop->iteration + $user->firstItem() - 1 }}</td>
                     <td><b><a href="">{{ $item->identitas->namalengkap }}</a></b></td>
                     <th>
-                        <a href="{{ route('lihatberkas', [$item->iduser]) }}" class="badge badge-btn badge-success w-100">
+                        <a href="{{ route('lihatberkas', [$item->iduser]) }}" class="badge badge-btn badge-success">
                             <i class="fa fa-eye"></i> Detail Berkas
                         </a>
                     </th>
