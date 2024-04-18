@@ -86,12 +86,12 @@
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>Nama Berkas Modul Ajar</th>
-                <th>Mime Type</th>
-                <th>Mapel</th>
-                <th>Bagikan</th>
-                <th>Aksi</th>
+                <th class="text-center" width="5px">No</th>
+                <th class="text-center">Nama Berkas Modul Ajar</th>
+                <th class="text-center">Mime Type</th>
+                <th class="text-center">Mapel</th>
+                <th class="text-center">Bagikan</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -107,12 +107,12 @@
                     <th>
                         {{ $item->mapel->namamapel }}
                     </th>
-                    <td>
+                    <td nowrap width="5px">
                         <a href="{{ route('bagikan.modulajar', [$item->idmodulajar]) }}" class="badge badge-btn badge-primary border-0">
                             <i class="fa fa-share-alt"></i> Bagikan
                         </a>
                     </td>
-                    <td>
+                    <td nowrap width="5px">
 
                         <a href="{{ route('modulajar.show', [$item->idmodulajar]) }}" class="badge badge-secondary badge-btn border-0 d-inline">
                             <i class="fa fa-eye"></i> Lihat

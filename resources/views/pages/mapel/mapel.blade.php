@@ -68,10 +68,10 @@
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>Nama Mapel</th>
-                <th>Guru Mapel</th>
-                <th>Aksi</th>
+                <th class="text-center" width="5px">No</th>
+                <th class="text-center">Nama Mapel</th>
+                <th class="text-center">Guru Mapel</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -84,7 +84,7 @@
                         {{ $item->user->identitas->namalengkap }}
                     </td>
 
-                    <td>
+                    <td width="5px" nowrap>
                         <form action='{{ route('mapel.destroy', [$item->idmapel]) }}' method='post' class='d-inline'>
                              @csrf
                              @method('DELETE')

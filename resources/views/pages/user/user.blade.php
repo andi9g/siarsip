@@ -87,10 +87,10 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>Nama User</th>
-                <th>Password</th>
-                <th>Aksi</th>
+                <th class="text-center" width="5px">No</th>
+                <th class="text-center">Nama User</th>
+                <th class="text-center">Password</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -105,7 +105,7 @@
                             -
                         @endif
                     </td>
-                    <td>
+                    <td nowrap width="5px">
                         <form action='{{ route('user.destroy', [$item->iduser]) }}' method='post' class='d-inline'>
                              @csrf
                              @method('DELETE')

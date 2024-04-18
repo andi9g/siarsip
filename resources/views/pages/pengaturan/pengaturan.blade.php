@@ -91,9 +91,9 @@
                     <table class="table table-sm table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nama Jabatan</th>
-                                <th>Aksi</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">Nama Jabatan</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
 
@@ -102,7 +102,7 @@
                                 <tr>
                                     <td width="5px">{{ $loop->iteration }}</td>
                                     <td>{{ $item->jabatan }}</td>
-                                    <td>
+                                    <td nowrap width="5px">
                                         <form action='{{ route('hapusJabatan', [$item->idjabatan]) }}' method='post' class='d-inline'>
                                              @csrf
                                              @method('DELETE')

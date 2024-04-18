@@ -34,9 +34,9 @@
         <thead>
             <tr>
                 <th width="5px">No</th>
-                <th>Nama Modul Ajar</th>
-                <th>Ket Berkas</th>
-                <th>Aksi</th>
+                <th class="text-center">Nama Modul Ajar</th>
+                <th class="text-center">Ket Berkas</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -48,7 +48,7 @@
                     <td>
                         {{ $item->mimetype }}
                     </td>
-                    <th>
+                    <th nowrap width="5px">
                         <a href="{{ route('show.berkas', [$item->idmodulajar]) }}" class="badge badge-btn badge-secondary w-100 py-2">
                             <i class="fa fa-eye"></i> Buka Berkas
                         </a>

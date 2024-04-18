@@ -86,12 +86,12 @@
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>Nama Berkas Arsip</th>
-                <th>Keterangan</th>
-                <th>Mime Type</th>
-                <th>Bagikan</th>
-                <th>Aksi</th>
+                <th class="text-center" width="5px">No</th>
+                <th class="text-center">Nama Berkas Arsip</th>
+                <th class="text-center">Keterangan</th>
+                <th class="text-center">Mime Type</th>
+                <th class="text-center">Bagikan</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -104,12 +104,12 @@
                     <td>
                         {{ $item->mimetype }}
                     </td>
-                    <td>
+                    <td nowrap width="5px">
                         <a href="{{ route('bagikan', [$item->idarsip]) }}" class="badge badge-btn badge-primary border-0">
                             <i class="fa fa-share-alt"></i> Bagikan
                         </a>
                     </td>
-                    <td>
+                    <td nowrap width="5px">
                         <form action="{{ route('downloadArsipku', [$item->idarsip]) }}" method="post" class="d-inline">
                             @csrf
                             <button type="submit" class="badge badge-success badge-btn border-0">

@@ -36,10 +36,10 @@
         <thead>
             <tr>
                 <th width="5px">No</th>
-                <th>Nama Berkas Keseluruhan</th>
-                <th>Keterangan</th>
-                <th>Pemilik</th>
-                <th>Aksi</th>
+                <th class="text-center">Nama Berkas Keseluruhan</th>
+                <th class="text-center">Keterangan</th>
+                <th class="text-center">Pemilik</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -52,7 +52,7 @@
                     <td>
                         {{ $item->user->identitas->namalengkap }}
                     </td>
-                    <td>
+                    <td nowrap width="5px">
                         <form action="{{ route('downloadKeseluruhan', [$item->idarsip]) }}" method="post" class="d-inline">
                             @csrf
                             <button type="submit" class="badge badge-success badge-btn border-0">

@@ -78,11 +78,11 @@
     <table class="table table-striped table-hover table-bordered mt-3">
         <thead>
             <tr>
-                <th width="5px">No</th>
-                <th>NIS</th>
-                <th>Nama Lengkap</th>
-                <th>Rombel</th>
-                <th>Aksi</th>
+                <th class="text-center" width="5px">No</th>
+                <th class="text-center">NIS</th>
+                <th class="text-center">Nama Lengkap</th>
+                <th class="text-center">Rombel</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
 
@@ -94,7 +94,7 @@
                     <td class="text-bold"><b>{{ $item->namalengkap }}</b>
                     </td>
                     <td>{{ $item->kelas->namakelas }} - {{ $item->jurusan->jurusan }}</td>
-                    <td>
+                    <td width="5px" nowrap>
                         <form action='{{ route('siswa.destroy', [$item->idsiswa]) }}' method='post' class='d-inline'>
                              @csrf
                              @method('DELETE')
