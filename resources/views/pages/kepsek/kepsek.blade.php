@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <form action="{{ url()->current() }}">
             <div class="input-group m-0">
-                <input class="form-control" type="text" value="{{ $keyword }}" name="keyword" placeholder="berdasarkan nama mapel" aria-label="berdasarkan nama mapel" aria-describedby="keyword">
+                <input class="form-control" type="text" value="{{ $keyword }}" name="keyword" placeholder="berdasarkan nama guru" aria-label="berdasarkan nama mapel" aria-describedby="keyword">
                 <div class="input-group-append">
                     <button type="submit" class="input-group-text bg-secondary text-light" id="keyword">
                         <i class="fa fa-search"></i> Cari
