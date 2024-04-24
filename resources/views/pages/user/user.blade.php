@@ -46,6 +46,7 @@
                                 <option value='guru'>Guru/User</option>
                                 <option value='kepsek'>Kepala Sekolah</option>
                                 <option value='superadmin'>Superadmin</option>
+                                <option value='tu'>Tata Usaha</option>
                             <select>
                         </div>
                     </div>
@@ -170,6 +171,9 @@
                                             <option value='superadmin'  @if ($item->identitas->akses == "superadmin")
                                                 selected
                                             @endif>Superadmin</option>
+                                            <option value='tu'  @if ($item->identitas->akses == "tu")
+                                                selected
+                                            @endif>Tata Usaha</option>
                                         <select>
                                     </div>
                                 </div>

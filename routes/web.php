@@ -52,10 +52,13 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('dibagikan', "dibagikanC");
         Route::post('download/{idarsip}/dibagikan', "dibagikanC@download")->name('downloadDibagikan');
 
-        //modulajar
-        Route::resource('modulajar', "modulajarC");
-        Route::get('bagikan/{idmodulajar}/modulajar', "modulajarC@bagikan")->name("bagikan.modulajar");
-        Route::post('bagikan/{idmodulajar}/modulajar', "modulajarC@prosesbagikan")->name("bagikan.modulajar.proses");
+        Route::middleware(['BlokirTu'])->group(function () {
+            //modulajar
+            Route::resource('modulajar', "modulajarC");
+            Route::get('bagikan/{idmodulajar}/modulajar', "modulajarC@bagikan")->name("bagikan.modulajar");
+            Route::post('bagikan/{idmodulajar}/modulajar', "modulajarC@prosesbagikan")->name("bagikan.modulajar.proses");
+
+        });
 
     });
 

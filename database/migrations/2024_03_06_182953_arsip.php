@@ -23,7 +23,7 @@ class Arsip extends Migration
             $table->String("email")->nullable();
             $table->enum("jk", ["P", "L"])->default("L");
             $table->enum("agama", ["Islam", "Kristen Protestan", "Katolik", "Hindu", "Buddha", "Konghucu"]);
-            $table->enum("akses", ["guru", "kepsek", "superadmin"]);
+            $table->enum("akses", ["guru", "kepsek", "superadmin", "tu"]);
             $table->String("gambar")->default("user.png");
             $table->timestamps();
         });

@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
 
-class GerbangGuru
+class BlokirTu
 {
     /**
      * Handle an incoming request.
@@ -19,7 +18,7 @@ class GerbangGuru
     {
         $cek = Auth::user();
         if(!empty($cek->identitas)) {
-            if ($cek->identitas->akses == "guru" || $cek->identitas->akses == "tu" || $cek->identitas->akses == "kepsek" || $cek->identitas->akses == "superadmin") {
+            if ($cek->identitas->akses != "tu") {
                 # code...
                 return $next($request);
             }

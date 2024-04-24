@@ -21,11 +21,37 @@ class arsipkuC extends Controller
     public function index(Request $request)
     {
         $keyword = empty($request->keyword)?'':$request->keyword;
+        $ket = empty($request->ket)?'':$request->ket;
+        $tahun = empty($request->thn)?date("Y"):$request->thn;
         $iduser = Auth::user()->iduser;
 
         $keterangan = keteranganM::get();
+
+        if(arsipM::count() > 0) {
+            $tahunAwal = date("Y", strtotime(arsipM::orderBy("tanggal", "asc")->first()->tanggal));
+            $tahunAkhir = date("Y", strtotime(arsipM::orderBy("tanggal", "desc")->first()->tanggal));
+            $thn = [];
+            for ($i = $tahunAwal; $i <= $tahunAkhir; $i++) {
+                $thn[] = $i;
+            }
+        }else {
+            $thn = [
+                date("Y"),
+            ];
+        }
+
+
+        $thn = $thn;
+
+
         $arsip = arsipM::where("iduser", $iduser)
         ->where("namaarsip", "like", "%$keyword%")
+        ->where(function ($query) use ($tahun) {
+            $query->whereYear("tanggal", "=", $tahun);
+        })
+        ->where(function ($query2) use ($ket) {
+            $query2->where("idketerangan","like", "$ket%");
+        })
         ->orderBy("tanggal", "desc")
         ->paginate(15);
 
@@ -35,6 +61,9 @@ class arsipkuC extends Controller
             "keyword" => $keyword,
             "keterangan" => $keterangan,
             "arsip" => $arsip,
+            "ket" => $ket,
+            "tahun" => $tahun,
+            "thn" => $thn,
         ]);
     }
 
@@ -216,9 +245,40 @@ class arsipkuC extends Controller
      * @param  \App\Models\arsipM  $arsipM
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, arsipM $arsipM)
+    public function update(Request $request, arsipM $arsipM, $idarsip)
     {
-        return response()->json(['path' => "coba"], 201);
+        $request->validate([
+            'namaarsip'=>'required',
+            'idketerangan'=>'required',
+            'tanggal'=>'required',
+        ]);
+
+        // try{
+            $data = $request->all();
+
+            if ($request->hasFile('file')) {
+                $originalName = $request->file('file')->getClientOriginalName();
+                $mimeType = $request->file('file')->getClientMimeType();
+                $extension = $request->file('file')->extension();
+                $encryptedName = Str::random(40) . '.' . $extension;
+
+                // Simpan berkas dengan nama terenkripsi
+                $path = $request->file('file')->storeAs('uploads', $encryptedName);
+            }else {
+                $arsip = arsipM::where("idarsip", $idarsip)->first();
+                $path  = $arsip->links;
+                $mimeType = $arsip->mimetype;
+            }
+            $data["links"] = $path;
+            $data["mimetype"] = $mimeType;
+            $data["iduser"] = Auth::user()->iduser;
+
+            arsipM::where("idarsip", $idarsip)->first()->update($data);
+            return redirect()->back()->with('success', 'Success');
+
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        // }
     }
 
     /**

@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
         'GerbangGuru' => \App\Http\Middleware\GerbangGuru::class,
         'GerbangSiswa' => \App\Http\Middleware\GerbangSiswa::class,
         'GerbangKepsek' => \App\Http\Middleware\GerbangKepsek::class,
+        'BlokirTu' => \App\Http\Middleware\BlokirTu::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
