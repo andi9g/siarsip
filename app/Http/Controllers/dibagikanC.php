@@ -21,13 +21,54 @@ class dibagikanC extends Controller
     public function index(Request $request)
     {
         $keyword = empty($request->keyword)?'':$request->keyword;
+        $ket = empty($request->ket)?'':$request->ket;
+        $tahun = empty($request->thn)?date("Y"):$request->thn;
         $iduser = Auth::user()->iduser;
 
         $keterangan = keteranganM::get();
-        $arsip = bagikanM::join("arsip", "arsip.idarsip", "bagikan.idarsip")
-        ->where("bagikan.iduser", $iduser)
-        ->where("arsip.namaarsip", "like", "%$keyword%")
-        ->orderBy("bagikan.created_at", "desc")
+
+
+        if(bagikanM::has('arsip')->where('iduser', $iduser)
+        ->count() > 0) {
+            $tahunAwal = date("Y", strtotime(bagikanM::has('arsip')
+            ->whereHas("arsip", function ($query) {
+                $query->orderBy('tanggal', 'asc');
+            })
+            ->first()->arsip->tanggal));
+
+
+            $tahunAkhir = date("Y", strtotime(bagikanM::has('arsip')
+            ->whereHas("arsip", function ($query) {
+                $query->orderBy('tanggal', 'asc');
+            })
+            ->first()->arsip->tanggal));
+
+            $thn = [];
+            for ($i = $tahunAwal; $i <= $tahunAkhir; $i++) {
+                $thn[] = $i;
+            }
+        }else {
+            $thn = [
+                date("Y"),
+            ];
+        }
+
+
+        $thn = $thn;
+
+
+        $arsip = bagikanM::has('arsip')
+        ->where("iduser", $iduser)
+        ->whereHas("arsip", function ($query) use ($keyword) {
+            $query->where("namaarsip", "like", "%$keyword%")
+            ->orderBy("tanggal", "desc");
+        })
+        ->whereHas("arsip", function ($query) use ($tahun) {
+            $query->whereYear("tanggal", "=", $tahun);
+        })
+        ->whereHas("arsip", function ($query2) use ($ket) {
+            $query2->where("idketerangan","like", "$ket%");
+        })
         ->paginate(15);
 
         $arsip->appends($request->only(["limit","keyword"]));
@@ -44,6 +85,9 @@ class dibagikanC extends Controller
             "keyword" => $keyword,
             "keterangan" => $keterangan,
             "arsip" => $arsip,
+            "ket" => $ket,
+            "tahun" => $tahun,
+            "thn" => $thn,
         ]);
     }
 

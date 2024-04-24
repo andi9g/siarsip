@@ -112,7 +112,7 @@
 
 		<div class="left-side-bar bg-primary">
 			<div class="brand-logo">
-				<a href="index.html">
+				<a href="{{ url('/home', []) }}">
 					<img src="vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
 					{{-- <img
 						src="{{ url('gambar', ['user.png']) }}"

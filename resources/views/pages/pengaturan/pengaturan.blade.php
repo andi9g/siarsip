@@ -242,7 +242,7 @@
                                     <td width="5px">{{ $loop->iteration }}</td>
                                     <td>{{ $item->jurusan }}</td>
                                     <td>{{ $item->namajurusan }}</td>
-                                    <td>
+                                    <td nowrap>
                                         <form action='{{ route('hapusJurusan', [$item->idjurusan]) }}' method='post' class='d-inline'>
                                              @csrf
                                              @method('DELETE')

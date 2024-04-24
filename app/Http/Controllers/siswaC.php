@@ -23,6 +23,9 @@ class siswaC extends Controller
         ->orderBy("idkelas", "asc")
         ->orderBy("namalengkap", "asc")
         ->paginate(15);
+
+        $siswa->appends($request->only(["limit", "keyword"]));
+
         $jurusan = jurusanM::get();
         $kelas = kelasM::get();
 

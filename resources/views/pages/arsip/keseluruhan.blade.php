@@ -15,15 +15,41 @@
     </div>
     <div class="col-md-6">
         <form action="{{ url()->current() }}">
-            <div class="input-group m-0">
-                <input class="form-control" type="text" name="keyword" placeholder="berdasarkan nama keseluruhan" aria-label="berdasarkan nama keseluruhan" aria-describedby="keyword">
-                <div class="input-group-append">
-                    <button type="submit" class="input-group-text bg-secondary text-light" id="keyword">
-                        <i class="fa fa-search"></i> Cari
-                    </button>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select id="keterangan" class="form-control" name="ket" onchange="submit()">
+                            <option value="">Semua Keterangan</option>
+                            @foreach ($keterangan as $item)
+                                <option value="{{ $item->idketerangan }}" @if ($item->idketerangan == $ket)
+                                    selected
+                                @endif>{{ $item->keterangan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="thn" class="form-control" name="thn" onchange="submit()">
+                        @foreach ($thn as $item)
+                            <option value="{{ $item }}" @if ($item == $tahun)
+                                selected
+                            @endif>{{ $item }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group m-0">
+                        <input class="form-control" type="text" name="keyword" placeholder="berdasarkan nama arsip" aria-label="berdasarkan nama arsip" aria-describedby="keyword">
+                        <div class="input-group-append">
+                            <button type="submit" class="input-group-text bg-secondary text-light" id="keyword">
+                                <i class="fa fa-search"></i> Cari
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+
+            </form>
     </div>
 </div>
 

@@ -18,9 +18,34 @@ class keseluruhanC extends Controller
     public function index(Request $request)
     {
         $keyword = empty($request->keyword)?'':$request->keyword;
+        $ket = empty($request->ket)?'':$request->ket;
+        $tahun = empty($request->thn)?date("Y"):$request->thn;
 
         $keterangan = keteranganM::get();
+
+        if(arsipM::count() > 0) {
+            $tahunAwal = date("Y", strtotime(arsipM::orderBy("tanggal", "asc")->first()->tanggal));
+            $tahunAkhir = date("Y", strtotime(arsipM::orderBy("tanggal", "desc")->first()->tanggal));
+            $thn = [];
+            for ($i = $tahunAwal; $i <= $tahunAkhir; $i++) {
+                $thn[] = $i;
+            }
+        }else {
+            $thn = [
+                date("Y"),
+            ];
+        }
+
+
+        $thn = $thn;
+
         $keseluruhan = arsipM::where("namaarsip", "like", "%$keyword%")
+        ->where(function ($query) use ($tahun) {
+            $query->whereYear("tanggal", "=", $tahun);
+        })
+        ->where(function ($query2) use ($ket) {
+            $query2->where("idketerangan","like", "$ket%");
+        })
         ->orderBy("tanggal", "desc")
         ->paginate(15);
 
@@ -30,6 +55,9 @@ class keseluruhanC extends Controller
             "keyword" => $keyword,
             "keterangan" => $keterangan,
             "keseluruhan" => $keseluruhan,
+            "ket" => $ket,
+            "tahun" => $tahun,
+            "thn" => $thn,
         ]);
     }
 
