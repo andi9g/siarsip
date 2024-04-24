@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('judul', "Mata Pelajaran")
+@section('judul', "Monitoring Modul Guru")
 
 @section('monitoringActive', 'active')
 

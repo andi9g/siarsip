@@ -61,13 +61,13 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#tambaharsip">Tambah Arsip</button>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
         <form action="{{ url()->current() }}">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     <select id="keterangan" class="form-control" name="ket" onchange="submit()">
                         <option value="">Semua Keterangan</option>
@@ -88,7 +88,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="input-group m-0">
                     <input class="form-control" type="text" name="keyword" placeholder="berdasarkan nama arsip" aria-label="berdasarkan nama arsip" aria-describedby="keyword">
                     <div class="input-group-append">
