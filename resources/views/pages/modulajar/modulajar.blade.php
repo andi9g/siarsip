@@ -119,12 +119,68 @@
                         <form action='{{ route('modulajar.destroy', [$item->idmodulajar]) }}' method='post' class='d-inline'>
                              @csrf
                              @method('DELETE')
-                             <button type='submit' onclick="return confirm('Yakin ingin dihapus?')" class='mx-1 badge badge-danger badge-btn border-0'>
+                             <button type='submit' onclick="return confirm('Yakin ingin dihapus?')" class='ml-1 badge badge-danger badge-btn border-0'>
                                  <i class="fa fa-trash"></i>
                              </button>
                         </form>
+                        <button class="ml-1 badge badge-info badge-btn border-0" type="button" data-toggle="modal" data-target="#ubahmodul{{ $item->idmodulajar }}">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
                     </td>
                 </tr>
+                <div id="ubahmodul{{ $item->idmodulajar }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-modulajar{{ $item->idmodulajar }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="my-modal-modulajar{{ $item->idmodulajar }}">Ubah Data</h5>
+                                <button class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ route('modulajar.update', [$item->idmodulajar]) }}" method="post" id="myFormBerkas" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="namamodulajar">Nama Modul Ajar</label>
+                                        <input id="namamodulajar" class="form-control @error('namamodulajar')
+                                            is-invalid
+                                        @enderror" type="text" value="{{ $item->namamodulajar }}" name="namamodulajar" placeholder="masukan nama modulajar">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="idmapel">Guru Mapel</label>
+                                        <select id="idmapel" required class="form-control custom-select2" style="width: 100%" name="idmapel">
+                                            <option disabled selected>Pilih Nama Mapel</option>
+                                            @foreach ($mapel as $m)
+                                                <option value="{{ $m->idmapel }}" @if ($item->idmapel == $m->idmapel)
+                                                    selected
+                                                @endif>{{ $m->namamapel }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tanggal">Tanggal Berkas</label>
+                                        <input id="tanggal" class="form-control @error('tanggal')
+                                            is-invalid
+                                        @enderror" value="{{ $item->tanggal }}" type="date" name="tanggal">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="file">Masukan File</label>
+                                        <input id="file" class="form-control" type="file" name="file">
+                                        <small><i>Pastikan upload berkas dibawah 20MB dan format yang di dukung adalah PDF, DOCX dan XLS</i></small>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success" id="myButton">Ubah Modul Ajar</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         </tbody>
     </table>

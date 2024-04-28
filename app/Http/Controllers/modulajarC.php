@@ -205,9 +205,39 @@ class modulajarC extends Controller
      * @param  \App\Models\modulajarM  $modulajarM
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, modulajarM $modulajarM)
+    public function update(Request $request, modulajarM $modulajarM, $idmodulajar)
     {
-        //
+        $request->validate([
+            'namamodulajar'=>'required',
+            // 'file'=>'required|mimes:png,jpg,pdf,pdf,docx,xls,mp4,pptx|file',
+            'tanggal'=>'required',
+        ]);
+
+        // try{
+            $data = $request->all();
+
+            if ($request->hasFile('file')) {
+                $originalName = $request->file('file')->getClientOriginalName();
+                $mimeType = $request->file('file')->getClientMimeType();
+                $extension = $request->file('file')->extension();
+                $encryptedName = Str::random(40) . '.' . $extension;
+
+                // Simpan berkas dengan nama terenkripsi
+                $path = $request->file('file')->storeAs('uploads/modulajar', $encryptedName);
+            }else {
+                $path = modulajarM::where("idmodulajar", $idmodulajar)->first()->links;
+                $mimeType = modulajarM::where("idmodulajar", $idmodulajar)->first()->mimetype;
+            }
+            $data["links"] = $path;
+            $data["mimetype"] = $mimeType;
+            $data["iduser"] = Auth::user()->iduser;
+
+            modulajarM::where("idmodulajar", $idmodulajar)->first()->update($data);
+            return redirect()->back()->with('success', 'Success');
+
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        // }
     }
 
     /**
