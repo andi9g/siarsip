@@ -157,7 +157,7 @@
                                     @endif" type="text" value="{{ Auth::user()->siswa->tempatlahir }}" name="tempatlahir">
                                 </div>
                                 <div class="form-group">
-                                    <label for="tanggallahir">Tempat Lahir</label>
+                                    <label for="tanggallahir">Tanggal Lahir</label>
                                     <input id="tanggallahir" class="form-control @if (empty(Auth::user()->siswa->tanggallahir))
                                         is-invalid
                                     @endif" type="date" value="{{ Auth::user()->siswa->tanggallahir }}" name="tanggallahir">

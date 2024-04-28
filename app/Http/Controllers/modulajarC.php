@@ -216,8 +216,13 @@ class modulajarC extends Controller
      * @param  \App\Models\modulajarM  $modulajarM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(modulajarM $modulajarM)
+    public function destroy(modulajarM $modulajarM, $idmodulajar)
     {
-        //
+        try{
+            modulajarM::destroy($idmodulajar);
+            return redirect()->back()->with('success', 'Success');
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
     }
 }
