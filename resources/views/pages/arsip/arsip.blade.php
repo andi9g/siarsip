@@ -27,9 +27,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="keterangan">Keterangan Produk</label>
+                        <label for="keterangan">Keterangan Arsip</label>
                         <select id="keterangan" required class="form-control" name="idketerangan">
-                            <option value="">Pilih Keterangan Produk</option>
+                            <option value="">Pilih Keterangan Arsip</option>
                             @foreach ($keterangan as $item)
                                 <option value="{{ $item->idketerangan }}">{{ $item->keterangan }}</option>
                             @endforeach
@@ -179,9 +179,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="keterangan">Keterangan Produk</label>
+                                        <label for="keterangan">Keterangan Arsip</label>
                                         <select id="keterangan" required class="form-control" name="idketerangan">
-                                            <option value="">Pilih Keterangan Produk</option>
+                                            <option value="">Pilih Keterangan Arsip</option>
                                             @foreach ($keterangan as $k)
                                                 <option value="{{ $k->idketerangan }}" @if ($item->idketerangan == $k->idketerangan)
                                                     selected
