@@ -203,7 +203,7 @@
                         <li>
 							<a href="{{ url('user', []) }}" class="dropdown-toggle no-arrow @yield('userActive')">
 								<span class="micon fa fa-user"></span
-								><span class="mtext">Data Pengolah</span>
+								><span class="mtext">Data Pengguna</span>
 							</a>
 						</li>
                         <li>
