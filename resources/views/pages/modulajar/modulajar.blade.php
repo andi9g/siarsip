@@ -113,7 +113,6 @@
                         </a>
                     </td>
                     <td nowrap width="5px">
-
                         <a href="{{ route('modulajar.show', [$item->idmodulajar]) }}" class="badge badge-secondary badge-btn border-0 d-inline">
                             <i class="fa fa-eye"></i> Lihat
                         </a>

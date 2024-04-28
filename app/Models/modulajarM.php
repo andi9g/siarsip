@@ -18,7 +18,7 @@ class modulajarM extends Model
     }
     public function mapel()
     {
-        return $this->hasOne(mapelM::class, 'iduser','iduser');
+        return $this->hasOne(mapelM::class, 'idmapel','idmapel');
     }
     public function bagikan()
     {
