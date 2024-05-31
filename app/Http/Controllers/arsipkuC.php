@@ -87,7 +87,7 @@ class arsipkuC extends Controller
     {
         $request->validate([
             'namaarsip'=>'required',
-            'file'=>'required|mimes:png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx|file',
+            'file'=>'required|mimes:png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,pptx,mp4,mp3|file',
             'tanggal'=>'required',
         ]);
 
