@@ -57,7 +57,7 @@ class modulajarC extends Controller
     {
         $request->validate([
             'namamodulajar'=>'required',
-            'file'=>'required|mimes:png,jpg,pdf,pdf,docx,xls,mp4,pptx|file',
+            'file'=>'required|mimes:png,jpg,jpeg,pdf,doc,docx,xls,xlsx,ppt,mp4,pptx|file',
             'tanggal'=>'required',
         ]);
 
